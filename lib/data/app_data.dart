@@ -1,19 +1,19 @@
 import '../models/sale.dart';
 import '../models/harvest.dart';
+import '../models/expense.dart';
 
 class AppData {
-  // All harvest records
   static final List<Harvest> harvests = [];
 
-  // All sales records
   static final List<Sale> sales = [];
 
-  // Current market price per quintal
+  static final List<Expense> expenses = [];
+
   static double currentMarketPrice = 52500;
 
-  // -------------------------------------------------
-  // TOTAL HARVESTED
-  // -------------------------------------------------
+  // -----------------------------
+  // HARVEST
+  // -----------------------------
 
   static double get totalHarvested {
     double total = 0;
@@ -25,9 +25,9 @@ class AppData {
     return total;
   }
 
-  // -------------------------------------------------
-  // TOTAL SOLD
-  // -------------------------------------------------
+  // -----------------------------
+  // SALES
+  // -----------------------------
 
   static double get totalSold {
     double total = 0;
@@ -39,26 +39,6 @@ class AppData {
     return total;
   }
 
-  // -------------------------------------------------
-  // AVAILABLE STOCK
-  // -------------------------------------------------
-
-  static double get availableStock {
-    return totalHarvested - totalSold;
-  }
-
-  // -------------------------------------------------
-  // ESTIMATED STOCK VALUE
-  // -------------------------------------------------
-
-  static double get estimatedStockValue {
-    return availableStock * currentMarketPrice;
-  }
-
-  // -------------------------------------------------
-  // TOTAL SALES VALUE
-  // -------------------------------------------------
-
   static double get totalSalesAmount {
     double total = 0;
 
@@ -67,5 +47,55 @@ class AppData {
     }
 
     return total;
+  }
+
+  // -----------------------------
+  // STOCK
+  // -----------------------------
+
+  static double get availableStock {
+    return totalHarvested - totalSold;
+  }
+
+  static double get estimatedStockValue {
+    return availableStock * currentMarketPrice;
+  }
+
+  // -----------------------------
+  // EXPENSES
+  // -----------------------------
+
+  static double get totalExpenses {
+    double total = 0;
+
+    for (final expense in expenses) {
+      total += expense.amount;
+    }
+
+    return total;
+  }
+
+  // -----------------------------
+  // PROFIT / LOSS
+  // -----------------------------
+
+  static double get netProfit {
+    return totalSalesAmount - totalExpenses;
+  }
+
+  static double get profitMargin {
+    if (totalSalesAmount == 0) {
+      return 0;
+    }
+
+    return (netProfit / totalSalesAmount) * 100;
+  }
+
+  static double get averageSellingPrice {
+    if (totalSold == 0) {
+      return 0;
+    }
+
+    return totalSalesAmount / totalSold;
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'market_prices_screen.dart';
 import 'sales_screen.dart';
 import 'stock_screen.dart';
+import 'profit_loss_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -225,12 +226,11 @@ class DashboardScreen extends StatelessWidget {
             ),
           );
         } else if (title == 'Profit / Loss') {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                'Profit / Loss will be connected next.',
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const ProfitLossScreen(),
               ),
-            ),
           );
         }
       },
